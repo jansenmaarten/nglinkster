@@ -1,6 +1,6 @@
 <div class="container posts-page">
 
-  <div class="post row" ng-repeat="(postId, post) in postsCtrl.posts">
+  <div class="post row" ng-repeat="(postIndex, post) in postsCtrl.posts">
     <div class="col-xs-1">
 
     </div>
@@ -13,8 +13,10 @@
         </a>
       </div>
       <div>
-        <a href="#/posts/{{ postsCtrl.posts.$keyAt(postId) }}">comments</a>
-        <a ng-click="postsCtrl.deletePost(postId)">delete</a>
+        <span>submitted by <a href="#/users/{{ post.owner }}">{{ post.owner }}</a>
+        &mdash;
+        <a href="#/posts/{{ postsCtrl.posts.$keyAt(postIndex) }}">comments</a>
+        <a ng-click="postsCtrl.deletePost(postsCtrl.posts.$keyAt(postIndex))" ng-show="signedIn && post.owner == currentUser.username">delete</a>
       </div>
     </div>
     <div class="col-md-2">

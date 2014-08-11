@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('NavCtrl', function($scope, $location, $timeout, Post, Auth) {
+app.controller('NavCtrl', function($rootScope, $location, $timeout, Post, Auth) {
     var self = this;
 
     self.post = {
@@ -8,19 +8,19 @@ app.controller('NavCtrl', function($scope, $location, $timeout, Post, Auth) {
       title: ''
     };
 
-    $scope.$on('$firebaseSimpleLogin:login', function() {
+    $rootScope.$on('$firebaseSimpleLogin:login', function() {
       Auth.signedIn();
       $location.path('/');
     });
 
     self.submitPost = function() {
-      Post.create(self.post).then(function(ref) {
+      Post.create(self.post).then(function(postId) {
         self.post = {
           url: 'http://',
           title: ''
         };
 
-        $location.path('/posts/' + ref.name());
+        $location.path('/posts/' + postId);
       });
     };
 

@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AuthCtrl', function($location, Auth) {
+app.controller('AuthCtrl', function($location, Auth, User) {
   var self = this;
 
   if (Auth.signedIn()) {
@@ -17,10 +17,12 @@ app.controller('AuthCtrl', function($location, Auth) {
   };
 
   self.register = function() {
-    console.log(self.user);
-    Auth.register(self.user).then(function() {
-      Auth.signedIn();
-      $location.path('/');
+    Auth.register(self.user).then(function(registeredUser) {
+      User.create(registeredUser, self.user.username);
+      Auth.login(self.user).then(function() {
+        Auth.signedIn();
+        $location.path('/');
+      });
     }, function(error) {
       self.error = error.toString();
     });
