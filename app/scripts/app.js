@@ -41,6 +41,11 @@ app.config(function ($routeProvider) {
         controller: 'PostViewCtrl',
         controllerAs: 'postViewCtrl'
       })
+      .when('/users/:username', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl',
+        controllerAs: 'profileCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
